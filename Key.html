@@ -1,0 +1,85 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>数据显示</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        #com {
+            width: 100%;
+            height: 100%;
+        }
+
+        #image img {
+            width: 500px;
+            height: 300px;
+        }
+
+        #image img:hover {
+            opacity: 2.5;
+        }
+    </style>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+</head>
+<!-- 此处的url需要改动，可能需要用js的循环来实现输出 -->
+<body>
+    <div id="image">
+        
+    </div>
+    
+    <div style="width:1200px;height:600px;" id="main"></div>
+
+    <script type="text/javascript">
+        var com = document.getElementById('image');
+        
+        for (var j = 2021; j > 2009; j--) {
+            var year = document.createElement("h1");
+            year.innerHTML = j + ":";
+            com.appendChild(year);
+            for (var i = 0; i < 12; i++) {
+                
+                var url = `./images/c${j}--${i + 1}.cdr`;
+
+                var Img = new Image();
+                Img.src = url;
+                Img.alt = i + "月：该月为空！";
+                com.appendChild(Img);
+            }
+            var br = document.createElement("hr");
+            com.appendChild(br);
+        }
+       
+
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '各年度发文量'
+            },
+            tooltip: {},
+            legend: {
+                data: ['篇数']
+            },
+            xAxis: {
+                data: ["2021", "2020", "2019", "2018", "2017", "2016", "2015", "2014", "2013", "2012", "2011", "2010"]
+            },
+            yAxis: {},
+            series: [{
+                name: '销量',
+                type: 'line',
+                data: [80, 9648, 10374, 8488, 10172, 9597, 8690, 8075, 7044, 6951, 5647, 5528]
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+    </script>
+</body>
+</html>
